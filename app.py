@@ -46,3 +46,17 @@ def generate_image(text):
         quality="standard",
         n=1,
     )
+    # Assuming the API returns an image URL; adjust based on actual response structure
+    return response.data[0].url
+
+# Cell 5: Streamlit UI 
+user_input = st.text_area("Enter a brief for your post:", " Though the day was cold, the warmth of your heart made everything feel brighter and more comforting")
+
+if st.button('Generate Post Content'):
+    with st.spinner('Generating Text...'):
+        post_text = analyze_text(user_input)
+        st.write(post_text)
+
+    with st.spinner('Generating Thumbnail...'):
+        thumbnail_url = generate_image(user_input)  # Consider adjusting the prompt for image generation if needed
+        st.image(thumbnail_url, caption='Generated Thumbnail')
